@@ -1,5 +1,5 @@
 from config import SNLI_DATA_FILES, PREMISE_KEY, HYPOTHESIS_KEY, PREMISE_ID_KEY, HYPOTHESIS_ID_KEY
-from typing import Literal, Dict, List, Set, Optional, Iterable
+from typing import Literal, Dict, List, Set, Tuple
 import jsonlines as jsonl
 from spacy.lang.en import English
 import string
@@ -54,16 +54,26 @@ class UnigramSNLIData:
         res.n_sentences = len(sentences)
 
         for tokens in sentences:
+            pairs = set()
             for src in tokens:
+                src = src.lower()
                 res.word_freq.setdefault(src, 0)
                 res.word_freq[src] += 1
 
-                res.co_freq.setdefault(src, {})
-                for tgt in set(tokens):  # multiple co-occurrence in the same sentence is counted as one
+                res.vocab.add(src)
+
+                for tgt in tokens:
+                    tgt = tgt.lower()
                     if src == tgt:
                         continue
 
-                    res.co_freq[src].setdefault(tgt, 0)
-                    res.co_freq[src][tgt] += 1
+                    # multiple co-occurrence in the same sentence is counted as one
+                    p = tuple(sorted([src, tgt]))  # type: Tuple[str, str]
+                    if p in pairs:
+                        continue
+                    pairs.add(p)
+
+                    res.co_freq.setdefault(p, 0)
+                    res.co_freq[p] += 1
 
         return res

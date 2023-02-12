@@ -1,4 +1,4 @@
-from typing import Optional, Iterable
+from typing import Optional, Iterable, Tuple
 from document_stats import DocumentStats
 import math
 
@@ -11,17 +11,19 @@ class PMI:
         res = {}
         for src in src_words:
             res[src] = {}
-            if src not in self.doc_stats.word_freq or src not in self.doc_stats.co_freq:
+            if src not in self.doc_stats.word_freq:
                 continue
 
-            targets = target_words if target_words is not None else self.doc_stats.co_freq[src]
+            targets = target_words if target_words is not None else list(self.doc_stats.vocab)
             for tgt in targets:
                 if src == tgt:
                     continue
-                if tgt not in self.doc_stats.co_freq[src] or tgt not in self.doc_stats.word_freq:
+
+                p = tuple(sorted([src, tgt]))  # type: Tuple[str, str]
+                if p not in self.doc_stats.co_freq:
                     continue
 
-                co_count = self.doc_stats.co_freq[src][tgt]
+                co_count = self.doc_stats.co_freq[p]
                 src_count = self.doc_stats.word_freq[src]
                 tgt_count = self.doc_stats.word_freq[tgt]
                 if src_count < threshold or tgt_count < threshold:
