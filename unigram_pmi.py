@@ -1,6 +1,6 @@
 import json
 from snli import UnigramSNLIData
-from config import IDENTITY_LABEL_FILE
+from config import IDENTITY_LABEL_FILE, PREMISE_KEY, HYPOTHESIS_KEY
 from pmi import PMI
 from dataclasses import asdict
 
