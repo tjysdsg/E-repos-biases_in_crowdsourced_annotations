@@ -1,4 +1,4 @@
-from config import SNLI_DATA_FILES, PREMISE_KEY, HYPOTHESIS_KEY, PREMISE_ID_KEY, HYPOTHESIS_ID_KEY
+from config import SNLI_DATA_FILES, PREMISE_KEY, HYPOTHESIS_KEY
 from typing import Literal, Dict, List, Set, Tuple
 import jsonlines as jsonl
 import spacy
@@ -43,18 +43,14 @@ class UnigramSNLIData:
         nlp = get_tokenizer()
 
         sentences = {}  # type: Dict[str, List[str]]
-        self.unique_ids = {}  # type: Dict[str, Set[str]]
         with jsonl.open(self.file) as reader:
             for obj in reader:
-                for sent_key, id_key in zip([PREMISE_KEY, HYPOTHESIS_KEY], [PREMISE_ID_KEY, HYPOTHESIS_ID_KEY]):
-                    # only append unique sentences
-                    self.unique_ids.setdefault(id_key, set())
-                    sent_id = obj[id_key]
-                    if sent_id in self.unique_ids[id_key]:
-                        continue
-                    self.unique_ids[id_key].add(sent_id)
-
+                for sent_key in [PREMISE_KEY, HYPOTHESIS_KEY]:
                     sentences.setdefault(sent_key, []).append(obj[sent_key])
+
+        # remove duplicated sentences
+        for key in sentences:
+            sentences[key] = list(set(sentences[key]))
 
         # batched tokenization and punctuation removal
         self.data = {}  # type: Dict[str, List[List[str]]]
