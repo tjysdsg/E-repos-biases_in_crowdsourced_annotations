@@ -7,7 +7,8 @@ class PMI:
     def __init__(self, doc_stats: DocumentStats):
         self.doc_stats = doc_stats
 
-    def __call__(self, src_words: Iterable[str], target_words: Optional[Iterable[str]] = None, threshold=10):
+    def __call__(self, src_words: Iterable[str], target_words: Optional[Iterable[str]] = None, threshold=10,
+                 include_scores=False, top_k=20):
         res = {}
         for src in src_words:
             src = src.lower()
@@ -39,8 +40,12 @@ class PMI:
                 res[src][tgt] = pmi
 
         # sort targets by pmi
+        ret = {}
         for src in res:
-            d = dict(sorted(res[src].items(), key=lambda x: x[1], reverse=True))
-            res[src] = d
-
-        return res
+            d = sorted(res[src].items(), key=lambda x: x[1], reverse=True)
+            d = d[:top_k]
+            if include_scores:
+                ret[src] = dict(d)
+            else:
+                ret[src] = [x[0] for x in d]
+        return ret

@@ -57,8 +57,8 @@ class UnigramSNLIData:
         for sent_key in [PREMISE_KEY, HYPOTHESIS_KEY]:
             for doc in nlp.pipe(
                     sentences[sent_key],
-                    n_process=8,
-                    batch_size=10000,
+                    # n_process=8,
+                    # batch_size=10000,
                     disable=["tok2vec", "parser", "ner", "entity_linker", "entity_ruler"],
             ):
                 tokens = [t.text for t in doc if t.text not in string.punctuation and not t.is_stop]
