@@ -84,13 +84,13 @@
     As mentioned before, each data sample contains a premise and a hypothesis.
     Note that multiple hypotheses might be generated from the same premise, therefore duplicated premise text is
     removed.
-    All words are converted into its lower case form.
-    Then we use \texttt{spaCy}~\cite{spacy} \texttt{en\_core\_web\_sm} model to tokenize and lemmatize raw string into
+    All words are converted into its lower case form and stop words are removed.
+    Then we use \texttt{spaCy}~\cite{spacy} \texttt{en\_core\_web\_sm} model to tokenize raw strings into
     lists of words and remove all punctuations.
 
     Note that words that occurs less than $10$ times in the corpus are removed.
 
-    \subsection{Unigram Analysis}
+    \subsection{Unigram PMI}
 
     We first perform unigram PMI analysis on the entire corpus, and then on the premise text and the hypothesis text
     individually.
@@ -99,45 +99,409 @@
     identity labels~\cite{identity_labels}.
 
 
+    \begin{table*}
+        \small
+        \centering
+        \begin{tabular}{l|c|c|c}
+            \hline
+            Identity & Corpus & Premise & Hypothesis \\
+            \hline
+            women &
+            \begin{tabular}{@{}c@{}}
+                saris,
+                headscarves,
+                burkas,    \\
+                notre,
+                husbands,
+                bikinis,   \\
+                gossip,
+                dame,
+                bras,      \\
+                port-a-potty,
+                grains,
+                kimonos,   \\
+                conversating,
+                skirts,
+                coverings, \\
+                breakroom,
+                headdresses,
+                gypsy,     \\
+                sunhats,
+                cher
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                saris,
+                headscarves,
+                bikinis,    \\
+                headdresses,
+                coverings,
+                skirts,     \\
+                kimonos,
+                dresses,
+                grains,     \\
+                purses,
+                clap,
+                indigenous, \\
+                menus,
+                canes,
+                knits,      \\
+                scarves,
+                derby,
+                wigs,       \\
+                badges,
+                jewelery
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                burkas,
+                husbands,
+                saris,     \\
+                kimonos,
+                bikinis,
+                gossip,    \\
+                conversating,
+                textiles,
+                skirts,    \\
+                gossiping,
+                keyboards,
+                sombreros, \\
+                incense,
+                gowns,
+                grain,     \\
+                dates,
+                ikea,
+                bistro,    \\
+                congratulate,
+                scarfs
+            \end{tabular} \\
+            \hline
+
+            men &
+            \begin{tabular}{@{}c@{}}
+                turbans,
+                briefcases,
+                wives,     \\
+                cylinders,
+                tuxedos,
+                rickshaws, \\
+                beards,
+                cigars,
+                jumpsuits, \\
+                wresting,
+                wheelbarrows,
+                sashes,    \\
+                canes,
+                wetsuits,
+                kilts,     \\
+                guitars,
+                gutters,
+                mining,    \\
+                supervise,
+                settle
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                turbans,
+                tuxedos,
+                ladders,  \\
+                jumpsuits,
+                wetsuits,
+                hoses,    \\
+                guitars,
+                hell,
+                dominoes, \\
+                sashes,
+                solar,
+                suits,    \\
+                beds,
+                netting,
+                ties,     \\
+                trumpets,
+                cannon,
+                kilts,    \\
+                fourth,
+                chess
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                turbans,
+                rickshaws,
+                wives,    \\
+                cigars,
+                tuxedos,
+                rig,      \\
+                beards,
+                southeast,
+                kilts,    \\
+                gutters,
+                jumpsuits,
+                settle,   \\
+                speedos,
+                guitars,
+                fatigues, \\
+                banjos,
+                hardhats,
+                naval,    \\
+                meditate,
+                trumpets
+            \end{tabular} \\
+            \hline
+
+            africans &
+            \begin{tabular}{@{}c@{}}
+                shawls,
+                huts,
+                source, \\
+                hearts,
+                armed,
+                die,    \\
+                tribe,
+                organized,
+                forced, \\
+                rights,
+                chop,
+                cloths, \\
+                weapons,
+                diamond,
+                tap,    \\
+                tribal,
+                homes,
+                zebra,  \\
+                belongings,
+                huddle
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                tribe,
+                hearts,
+                tap,        \\
+                huts,
+                organized,
+                belongings, \\
+                huddle,
+                clearing,
+                begins,     \\
+                nature,
+                ages,
+                jungle,     \\
+                song,
+                barber,
+                appear,     \\
+                gather,
+                taken,
+                canoe,      \\
+                dinner,
+                digging
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                armed,
+                source,
+                die,     \\
+                cloths,
+                tribal,
+                forced,  \\
+                rights,
+                weapons,
+                diamond, \\
+                homes,
+                zebra,
+                america, \\
+                native,
+                guns,
+                travel,  \\
+                shelter,
+                rice,
+                bananas, \\
+                loud,
+                supermarket
+            \end{tabular} \\
+            \hline
+
+            caucasian &
+            \begin{tabular}{@{}c@{}}
+                blonds,
+                graffited,
+                slender,    \\
+                straddling,
+                pallet,
+                unpleasant, \\
+                toronto,
+                lockers,
+                fleece,     \\
+                bared,
+                handsome,
+                non,        \\
+                hairdresser,
+                sunflower,
+                undergoing, \\
+                bonding,
+                index,
+                leafs
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                lockers,
+                handsome,
+                explains,  \\
+                contemplates,
+                straddling,
+                pages,     \\
+                leafs,
+                era,
+                frosting,  \\
+                projects,
+                postal,
+                latino,    \\
+                southeast,
+                slender,
+                extending, \\
+                diverse,
+                addressing,
+                sweaty,    \\
+                stationary,
+                reviewing
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                slender,
+                fleece,
+                non,         \\
+                zip,
+                festive,
+                handsome,    \\
+                defending,
+                iced,
+                auditioning, \\
+                heavyset,
+                arrival,
+                barrels,     \\
+                spar,
+                collect,
+                ipod,        \\
+                wildly,
+                freezing,
+                mardi,       \\
+                gras,
+                await
+            \end{tabular} \\
+            \hline
+
+            muslims &
+            \begin{tabular}{@{}c@{}}
+                terrorists,
+                christians,
+                channel,   \\
+                sponsored,
+                celebrate,
+                opening,   \\
+                phones,
+                local,
+                news,      \\
+                skateboards,
+                great,
+                speech,    \\
+                marching,
+                bicycles,
+                new,       \\
+                gather,
+                restaurant,
+                listening, \\
+                body
+            \end{tabular}
+            &
+            NA
+            &
+            \begin{tabular}{@{}c@{}}
+                christians,
+                terrorists,
+                celebrate,   \\
+                opening,
+                phones,
+                skateboards, \\
+                local,
+                marching,
+                gather,      \\
+                great,
+                body,
+                new,         \\
+                like,
+                restaurant,
+                shopping,    \\
+                store,
+                talking,
+                beach,       \\
+                near,
+                riding
+            \end{tabular} \\
+            \hline
+
+            christians &
+            \begin{tabular}{@{}c@{}}
+                praising,
+                gospel,
+                lord,     \\
+                muslims,
+                impressed,
+                pork,     \\
+                villagers,
+                lobster,
+                crazy,    \\
+                campfire,
+                sing,
+                church,   \\
+                woods,
+                fun,
+                gathered, \\
+                selling,
+                music,
+                friends,  \\
+                having,
+                outdoors
+            \end{tabular}
+            &
+            NA
+            &
+            \begin{tabular}{@{}c@{}}
+                muslims,
+                gospel,
+                impressed, \\
+                pork,
+                villagers,
+                lobster,   \\
+                campfire,
+                sing,
+                church,    \\
+                gathered,
+                selling,
+                music,     \\
+                friends,
+                outdoors,
+                boys,      \\
+                play,
+                running,
+                group,     \\
+                playing,
+                people
+            \end{tabular} \\
+            \hline
+        \end{tabular}
+        \caption{Top associated unigrams with identity labels}
+        \label{tab:unigram_pmi}
+    \end{table*}
+    % \begin{tabular}{@{}c@{}}
+    % \end{tabular}
+
+
     \section{Results and Discussion}
 
-    \subsection{Tables and figures}
+    \subsection{Unigram PMI}
 
-    See Table~\ref{tab:accents} for an example of a table and its caption.
-    \textbf{Do not override the default caption sizes.}
+    Table~\ref{tab:unigram_pmi} lists top associated unigrams with some of the identity labels in the entire corpus,
+    in premise text, and in hypothesis text.
 
-    \begin{table}
-        \centering
-        \begin{tabular}{lc}
-            \hline
-            \textbf{Command} & \textbf{Output} \\
-            \hline
-            \verb|{\"a}|     & {\"a}           \\
-            \verb|{\^e}|     & {\^e}           \\
-            \verb|{\`i}|     & {\`i}           \\
-            \verb|{\.I}|     & {\.I}           \\
-            \verb|{\o}|      & {\o}            \\
-            \verb|{\'u}|     & {\'u}           \\
-            \verb|{\aa}|     & {\aa}           \\\hline
-        \end{tabular}
-        \begin{tabular}{lc}
-            \hline
-            \textbf{Command} & \textbf{Output} \\
-            \hline
-            \verb|{\c c}|    & {\c c}          \\
-            \verb|{\u g}|    & {\u g}          \\
-            \verb|{\l}|      & {\l}            \\
-            \verb|{\~n}|     & {\~n}           \\
-            \verb|{\H o}|    & {\H o}          \\
-            \verb|{\v r}|    & {\v r}          \\
-            \verb|{\ss}|     & {\ss}           \\
-            \hline
-        \end{tabular}
-        \caption{Example commands for accented characters, to be used in, \emph{e.g.}, Bib\TeX{} entries.}
-        \label{tab:accents}
-    \end{table}
-
-
+    \clearpage
     \bibliography{anthology,custom}
     \bibliographystyle{acl_natbib}
 
