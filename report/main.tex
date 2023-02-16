@@ -1,0 +1,151 @@
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+\pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+
+\documentclass[11pt]{article}
+
+% Remove the "review" option to generate the final version.
+% \usepackage[review]{acl}
+\usepackage{acl}
+
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+% For Vietnamese characters
+% \usepackage[T5]{fontenc}
+% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
+
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{amsmath}
+
+\title{11830 Report: Biases in Crowdsourced Annotations}
+
+\author{
+    Jiyang Tang \\
+    \texttt{jiyangta@andrew.cmu.edu}
+}
+
+\begin{document}
+    \maketitle
+    \begin{abstract}
+        This document is a supplement to the general instructions for *ACL authors. It contains instructions for using the \LaTeX{} style files for ACL conferences.
+        The document itself conforms to its own specifications, and is therefore an example of what your manuscript should look like.
+        These instructions should be used both for papers submitted for review and for final versions of accepted papers.
+    \end{abstract}
+
+
+    \section{Introduction}
+
+    The Stanford Natural Language Inference (SNLI) corpus\footnote{\url{https://nlp.stanford.edu/projects/snli/}} is a large crowdsourced natural language
+    inference dataset~\cite{snli}.
+    For each premise sentence, annotators were asked to write a hypothesis that is either a contradiction,
+    neutral statement, or entailment of the premise.
+
+    The data was collected from Amazon Mechanical Turk (MTurk) crowdsourcing service.
+    Previous studies have shown that MTurk crowd-workers tend to have lower income, higher education levels, and
+    lower average ages~\cite{mturks_demography}.
+    We believe that biases are inevitably propagated from the dataset authors to the premise text, and from the
+    crowd-workers to the hypothesis text.
+    Therefore, we will analyze the biases in the data by performing word association tests in this report.
+
+
+    \section{Method}
+
+    \subsection{Pointwise Mutual Information}
+
+    Pointwise Mutual Information (PMI) is used to measure how much word $w_i$ is associated with word
+    $w_j$~\cite{pmi,speech_and_nlp_book}.
+    PMI is calculated as follows:
+
+    \[
+        \text{PMI}(w_i, w_j) = log_2\frac{N\cdot c(w_i, w_j)}{c(w_i)c(w_j)}
+    \]
+    where $N$ is the total number of sentences in the corpus,
+    $c(w_i,w_j)$ is number of times $w_i$ and $w_j$ co-occur in a sentence,
+    $c(w_i)$ is the number of times $w_i$ occurs in the corpus,
+    and $c(w_j)$ is the number of times $w_j$ occurs in the corpus.
+
+    Note that if a pair of words $w_i$ and $w_j$ occurs multiple times in the same sentence, $c(w_i,w_j)$ is counted
+    as $1$.
+
+    PMI ranges from negative infinity to positive infinity.
+    Large PMI suggests high word association.
+    Negative PMI implies two words co-occur less often than by chance and is unreliable in
+    practice~\cite{speech_and_nlp_book}.
+
+
+    \section{Experiments}
+
+    \subsection{Data Preprocessing}
+
+    As mentioned before, each data sample contains a premise and a hypothesis.
+    Note that multiple hypotheses might be generated from the same premise, therefore duplicated premise text is
+    removed.
+    All words are converted into its lower case form.
+    Then we use \texttt{spaCy}~\cite{spacy} \texttt{en\_core\_web\_sm} model to tokenize and lemmatize raw string into
+    lists of words and remove all punctuations.
+
+    Note that words that occurs less than $10$ times in the corpus are removed.
+
+    \subsection{Unigram Analysis}
+
+    We first perform unigram PMI analysis on the entire corpus, and then on the premise text and the hypothesis text
+    individually.
+
+    For each analysis experiment, we focus on the most associated words with a set of
+    identity labels~\cite{identity_labels}.
+
+
+    \section{Results and Discussion}
+
+    \subsection{Tables and figures}
+
+    See Table~\ref{tab:accents} for an example of a table and its caption.
+    \textbf{Do not override the default caption sizes.}
+
+    \begin{table}
+        \centering
+        \begin{tabular}{lc}
+            \hline
+            \textbf{Command} & \textbf{Output} \\
+            \hline
+            \verb|{\"a}|     & {\"a}           \\
+            \verb|{\^e}|     & {\^e}           \\
+            \verb|{\`i}|     & {\`i}           \\
+            \verb|{\.I}|     & {\.I}           \\
+            \verb|{\o}|      & {\o}            \\
+            \verb|{\'u}|     & {\'u}           \\
+            \verb|{\aa}|     & {\aa}           \\\hline
+        \end{tabular}
+        \begin{tabular}{lc}
+            \hline
+            \textbf{Command} & \textbf{Output} \\
+            \hline
+            \verb|{\c c}|    & {\c c}          \\
+            \verb|{\u g}|    & {\u g}          \\
+            \verb|{\l}|      & {\l}            \\
+            \verb|{\~n}|     & {\~n}           \\
+            \verb|{\H o}|    & {\H o}          \\
+            \verb|{\v r}|    & {\v r}          \\
+            \verb|{\ss}|     & {\ss}           \\
+            \hline
+        \end{tabular}
+        \caption{Example commands for accented characters, to be used in, \emph{e.g.}, Bib\TeX{} entries.}
+        \label{tab:accents}
+    \end{table}
+
+
+    \bibliography{anthology,custom}
+    \bibliographystyle{acl_natbib}
+
+    % \appendix
+
+    % \section{Example Appendix}
+    % \label{sec:appendix}
+
+    % This is an appendix.
+
+\end{document}
