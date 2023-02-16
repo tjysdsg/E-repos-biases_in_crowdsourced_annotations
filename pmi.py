@@ -10,12 +10,16 @@ class PMI:
     def __call__(self, src_words: Iterable[str], target_words: Optional[Iterable[str]] = None, threshold=10):
         res = {}
         for src in src_words:
-            res[src] = {}
+            src = src.lower()
+
             if src not in self.doc_stats.word_freq:
                 continue
+            res[src] = {}
 
             targets = target_words if target_words is not None else list(self.doc_stats.vocab)
             for tgt in targets:
+                tgt = tgt.lower()
+
                 if src == tgt:
                     continue
 

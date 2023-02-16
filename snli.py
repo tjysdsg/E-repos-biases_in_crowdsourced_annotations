@@ -1,9 +1,34 @@
 from config import SNLI_DATA_FILES, PREMISE_KEY, HYPOTHESIS_KEY, PREMISE_ID_KEY, HYPOTHESIS_ID_KEY
 from typing import Literal, Dict, List, Set, Tuple
 import jsonlines as jsonl
-from spacy.lang.en import English
+import spacy
 import string
 from document_stats import DocumentStats
+from spacy.lang.char_classes import ALPHA, ALPHA_LOWER, ALPHA_UPPER, CONCAT_QUOTES, LIST_ELLIPSES, LIST_ICONS
+from spacy.util import compile_infix_regex
+
+
+def get_tokenizer():
+    nlp = spacy.load("en_core_web_sm")
+
+    # prevent spacy from splitting hyphens
+    # see spacy.lang.punctuation
+    infixes = (
+            LIST_ELLIPSES
+            + LIST_ICONS
+            + [
+                r"(?<=[0-9])[+\-\*^](?=[0-9-])",
+                r"(?<=[{al}{q}])\.(?=[{au}{q}])".format(
+                    al=ALPHA_LOWER, au=ALPHA_UPPER, q=CONCAT_QUOTES
+                ),
+                r"(?<=[{a}]),(?=[{a}])".format(a=ALPHA),
+                # r"(?<=[{a}])(?:{h})(?=[{a}])".format(a=ALPHA, h=HYPHENS), <---
+                r"(?<=[{a}0-9])[:<>=/](?=[{a}])".format(a=ALPHA),
+            ]
+    )
+    infix_re = compile_infix_regex(infixes)
+    nlp.tokenizer.infix_finditer = infix_re.finditer
+    return nlp
 
 
 class UnigramSNLIData:
@@ -15,9 +40,9 @@ class UnigramSNLIData:
         self._read()
 
     def _read(self):
-        nlp = English()
+        nlp = get_tokenizer()
 
-        self.data = {}  # type: Dict[str, List[List[str]]]
+        sentences = {}  # type: Dict[str, List[str]]
         self.unique_ids = {}  # type: Dict[str, Set[str]]
         with jsonl.open(self.file) as reader:
             for obj in reader:
@@ -29,11 +54,19 @@ class UnigramSNLIData:
                         continue
                     self.unique_ids[id_key].add(sent_id)
 
-                    # tokenize and remove punctuations
-                    tokens = nlp(obj[sent_key])
-                    tokens = [t.text for t in tokens if t.text not in string.punctuation]
+                    sentences.setdefault(sent_key, []).append(obj[sent_key])
 
-                    self.data.setdefault(sent_key, []).append(tokens)
+        # batched tokenization and punctuation removal
+        self.data = {}  # type: Dict[str, List[List[str]]]
+        for sent_key in [PREMISE_KEY, HYPOTHESIS_KEY]:
+            for doc in nlp.pipe(
+                    sentences[sent_key],
+                    n_process=8,
+                    batch_size=10000,
+                    disable=["tok2vec", "parser", "ner", "entity_linker", "entity_ruler"],
+            ):
+                tokens = [t.text for t in doc if t.text not in string.punctuation and not t.is_stop]
+                self.data.setdefault(sent_key, []).append(tokens)
 
         # import json
         # with open('tmp.json', 'w') as f:
