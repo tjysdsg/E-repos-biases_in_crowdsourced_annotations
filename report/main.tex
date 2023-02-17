@@ -35,24 +35,21 @@
 
 \begin{document}
     \maketitle
-    \begin{abstract}
-        This document is a supplement to the general instructions for *ACL authors. It contains instructions for using the \LaTeX{} style files for ACL conferences.
-        The document itself conforms to its own specifications, and is therefore an example of what your manuscript should look like.
-        These instructions should be used both for papers submitted for review and for final versions of accepted papers.
-    \end{abstract}
+    % \begin{abstract}
+    % \end{abstract}
 
 
     \section{Introduction}
 
-    The Stanford Natural Language Inference (SNLI) corpus\footnote{\url{https://nlp.stanford.edu/projects/snli/}} is a large crowdsourced natural language
-    inference dataset~\cite{snli}.
+    The Stanford Natural Language Inference (SNLI) corpus\footnote{\url{https://nlp.stanford.edu/projects/snli/}} is a
+    large crowdsourced natural language inference dataset~\cite{snli}.
     For each premise sentence, annotators were asked to write a hypothesis that is either a contradiction,
-    neutral statement, or entailment of the premise.
+    a neutral statement, or entailment of the premise.
 
     The data was collected from Amazon Mechanical Turk (MTurk) crowdsourcing service.
     Previous studies have shown that MTurk crowd-workers tend to have lower income, higher education levels, and
     lower average ages~\cite{mturks_demography}.
-    We believe that biases are inevitably propagated from the dataset authors to the premise text, and from the
+    We believe that biases are propagated from the dataset authors to the premise text, and from the
     crowd-workers to the hypothesis text.
     Therefore, we will analyze the biases in the data by performing word association tests in this report.
 
@@ -61,7 +58,7 @@
 
     \subsection{Pointwise Mutual Information}
 
-    Pointwise Mutual Information (PMI) is used to measure how much word $w_i$ is associated with word
+    Pointwise Mutual Information (PMI) is used to measure how much word $w_i$ is associated with the word
     $w_j$~\cite{pmi,speech_and_nlp_book}.
     PMI is calculated as follows:
 
@@ -87,17 +84,17 @@
     \subsection{Data Preprocessing}
 
     As mentioned before, each data sample contains a premise and a hypothesis.
-    Note that multiple hypotheses might be generated from the same premise, therefore duplicated premise text is
+    Note that multiple hypotheses might be generated from the same premise, therefore duplicated sentences are
     removed.
-    All words are converted into its lower case form and stop words are removed.
+    All words are converted into their lowercase form and stop words are removed.
     Then we use \texttt{spaCy}~\cite{spacy} \texttt{en\_core\_web\_sm} model to tokenize raw strings into
     lists of words and remove all punctuations.
 
-    Note that words that occurs less than $10$ times in the corpus are removed.
+    Note that words that occur less than $10$ times in the corpus are removed.
 
     \subsection{Unigram PMI}
 
-    We perform unigram PMI analysis on the premise text and the hypothesis text individually.
+    We individually perform unigram PMI analysis on the premise text and the hypothesis text.
     For each analysis experiment, we focus on the most associated words with a set of
     identity labels~\cite{identity_labels}.
 
@@ -265,7 +262,7 @@
             \end{tabular}
 
             \begin{tablenotes}
-                \item[1] Words that don't have associated words that occurs more than 10 times in premise text.
+                \item[1] Words that don't have associated words that occur more than 10 times in premise text.
                 The threshold is ignored for these words.
             \end{tablenotes}
         \end{threeparttable}
@@ -277,37 +274,34 @@
     \subsection{Bigram PMI}
 
     We extend the list of identity labels by combining existing ones into bigrams.
-    We also extract all bigrams from the text, and add them to the vocabulary for PMI calculation.
-    Note that we skip the calculation if two bigrams share a unigram, since we are not interested in association
-    between ``he'' and ``he doesn't``.
+    We also extract all bigrams from the text and add them to the vocabulary for PMI calculation.
+    Note that we skip the calculation if two bigrams share a unigram since we are not interested in the association
+    between ``he'' and ``he doesn't''.
 
 
     \section{Results and Discussion}
 
     \subsection{Unigram PMI}
 
-    Table~\ref{tab:unigram_pmi} lists top associated unigrams with some of the identity labels in the entire corpus,
-    in premise text, and in hypothesis text.
-    We can easily spot some alarmingly biased word association.
+    Table~\ref{tab:unigram_pmi} lists the top associated unigrams with some of the identity labels
+    in the premises and in the hypotheses.
+    We can easily spot some alarmingly biased word associations.
     For example, \texttt{muslims} is highly associated with \texttt{terrorists}, \texttt{africans} co-occur with
     \texttt{armed} and \texttt{die} frequently, while \texttt{caucasian} is often associated with \texttt{handsome}.
-
     There are also many implicit biases or stereotypes in the data.
     \texttt{women} is most associated with words related to fashion, while \texttt{men} with words about
     tools and work clothes.
-    This implies that women spend more time on fancy clothes while men work on labor
-    jobs and don't care about their looks, which is not true.
 
-    Meanwhile, we can spot more heavily biased word associations in the hypothesis data compared to premises.
+    Meanwhile, we can spot more heavily biased word associations in the hypothesis data compared to the premises.
     For example, associations between \texttt{muslims} and \texttt{terrorists} and between
-    \texttt{women} and \texttt{gossip} is only present in the hypotheses.
+    \texttt{women} and \texttt{gossip} are only present in the hypotheses.
 
-    However, there are yet some cases where the bias is more prevalent in the premises.
+    However, there are yet some cases where the bias is more prevalent on the premises.
     For example, \texttt{israeli} is most associated with \texttt{desolate} and \texttt{pirates} in premises,
     compared to \texttt{problems}, \texttt{eastern}, \texttt{cashier} and so on in hypotheses.
 
     We also find it interesting that \texttt{south} is among the top 5 most associated words with \texttt{american}
-    while \texttt{north} is not found even in the top 20s, as if people think \texttt{american} are from North
+    while \texttt{north} is not found even in the top 20s, as if people think \texttt{american}'s are from North
     America by default.
 
     \subsection{Bigram PMI}
@@ -410,9 +404,9 @@
         \label{tab:bigram2unigram_pmi}
     \end{table*}
 
-    Table~\ref{tab:bigram2unigram_pmi} lists top associated unigrams with bigram identity labels.
+    Table~\ref{tab:bigram2unigram_pmi} lists the top associated unigrams or bigrams with bigram identity labels.
     This result corresponds to our previous finding that hypothesis text contains more biases and stereotypes.
-    For exapmle, \texttt{old men} and \texttt{grumpy}, \texttt{black people} and \texttt{rioting}, and
+    For example, \texttt{old men} and \texttt{grumpy}, \texttt{black people} and \texttt{rioting}, and
     \texttt{asian teenagers} and \texttt{electronic devices}.
 
     \begin{table*}
@@ -456,13 +450,13 @@
         \label{tab:bigram2bigram_pmi}
     \end{table*}
 
-    Table~\ref{tab:bigram2bigram_pmi} shows top associated unigrams or bigrams with unigram identity labels.
+    Table~\ref{tab:bigram2bigram_pmi} shows the top associated unigrams or bigrams with unigram identity labels.
     We can spot new stereotypical phrases not seen in previous experiments.
     For example, \texttt{indian} and \texttt{works hard}, and \texttt{africans} and \texttt{shooting guns}.
 
     \subsection{Qualitative Analysis}
 
-    In this section, we will present some examples that contains biases or stereotypes.
+    In this section, we will present some examples that contain biases or stereotypes.
 
     In the example below, the annotator somehow chooses Africans shooting guns as a
     contradictory event of the premise.
@@ -480,7 +474,7 @@
         Label: neutral
     \end{quote}
 
-    In the next example, we believe that annotator is misled by the premise although the label is \texttt{neutral}.
+    In the next example, we believe that the annotator is misled by the premise.
     Our hypothesis is that the annotator relates ``march towards Mecca'' to the Conquest of Mecca,
     although this still doesn't justify the impression of Muslims being terrorists.
     \begin{quote}
@@ -509,7 +503,7 @@
         Label: entailment
     \end{quote}
 
-    And there seems to be common association of female identities and gossiping.
+    And there seems to be a common association between female identities and gossiping.
 
     \begin{quote}
         Premise: Two women sit outside on a bench along a street, looking across the street. \\
@@ -536,6 +530,33 @@
     \end{quote}
 
     \subsection{Crowdsourcing Setup}
+
+    As we have seen in previous sections, the premises sometimes contain biases.
+    Meanwhile, they can also indirectly mislead crowd-workers into adding their own biases to the hypotheses by
+    containing concepts, which are harm-free by themselves, that resonate with crowd-workers biases.
+
+    A common characteristic of such cases is that they are mostly unrelated to the premises except for the main
+    subject.
+    This phenomenon is particularly obvious in \texttt{neutral} data samples, in which the crowd-workers have the most
+    freedom for creative imagination.
+
+    We believe with adequate instructions, a free-form generated data collection approach can be mostly free from
+    biases.
+    For example, specific warnings should be given to crowd-workers so that they do not imagine completely unrelated
+    scenarios when writing hypotheses.
+    In addition, they should be careful about introducing gender, race, nationality, and other identities that are
+    unseen in the premises.
+    Perhaps asking them for a short paragraph to justify their reasoning in such cases can discourage them from doing
+    that.
+    Meanwhile, this extra data can be used for building reasoning models.
+
+
+    \section{Conclusion}
+
+    In this report, we have analyzed the biases in SNLI dataset both quantitatively and qualitatively.
+    In addition to biases in premises, we found much more in the hypotheses.
+    Sometimes such biases are indirectly generated based on concepts in the premises, which encourages us to develop
+    a good crowdsourcing paradigm that discourages crowd-workers from generating biases.
 
     \clearpage
     \bibliography{anthology,custom}
