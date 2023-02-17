@@ -1,6 +1,7 @@
 import os
 
 IDENTITY_LABEL_FILE = 'identity_labels.txt'
+IDENTITY_LABEL_EXT_FILE = 'identity_labels_ext.txt'
 
 SNLI_DATA_DIR = 'snli_1.0'
 

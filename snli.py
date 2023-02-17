@@ -2,6 +2,7 @@ from config import SNLI_DATA_FILES, PREMISE_KEY, HYPOTHESIS_KEY
 from typing import Literal, Dict, List, Set, Tuple
 import jsonlines as jsonl
 import spacy
+from spacy.tokens import Token
 import string
 from document_stats import DocumentStats
 from spacy.lang.char_classes import ALPHA, ALPHA_LOWER, ALPHA_UPPER, CONCAT_QUOTES, LIST_ELLIPSES, LIST_ICONS
@@ -53,7 +54,7 @@ class UnigramSNLIData:
             sentences[key] = list(set(sentences[key]))
 
         # batched tokenization and punctuation removal
-        self.data = {}  # type: Dict[str, List[List[str]]]
+        self.data = {}  # type: Dict[str, List[List[Token]]]
         for sent_key in [PREMISE_KEY, HYPOTHESIS_KEY]:
             for doc in nlp.pipe(
                     sentences[sent_key],
@@ -61,16 +62,13 @@ class UnigramSNLIData:
                     # batch_size=10000,
                     disable=["tok2vec", "parser", "ner", "entity_linker", "entity_ruler"],
             ):
-                tokens = [t.text for t in doc if t.text not in string.punctuation and not t.is_stop]
+                tokens = [t for t in doc]
                 self.data.setdefault(sent_key, []).append(tokens)
 
-        # import json
-        # with open('tmp.json', 'w') as f:
-        #     json.dump(self.data, f, indent=2)
-
-    def collect_stats(self, key=None) -> DocumentStats:
+    def collect_stats(self, key=None, bigram=False) -> DocumentStats:
         """
         :param key: The sentence key, collect sentences from the entire corpus if None
+        :param bigram: Collect bi-gram information
         """
         res = DocumentStats()
 
@@ -82,27 +80,54 @@ class UnigramSNLIData:
 
         res.n_sentences = len(sentences)
 
+        def add_vocab(word: str):
+            res.word_freq.setdefault(word, 0)
+            res.word_freq[word] += 1
+            res.vocab.add(word)
+            # print(f"WORD: {word}")
+
+        def add_pair(word1: str, word2: str):
+            # shouldn't have overlapping unigrams
+            s1 = set(word1.split())
+            s2 = set(word2.split())
+            if len(s1 & s2) > 0:
+                return
+
+            # multiple co-occurrence in the same sentence is counted as one
+            p = tuple(sorted([word1, word2]))  # type: Tuple[str, str]
+
+            if p not in pairs:
+                pairs.add(p)
+                res.co_freq.setdefault(p, 0)
+                res.co_freq[p] += 1
+                # print(f"PAIR: {word1} + {word2}")
+
+        def is_word(word: Token):
+            return not word.is_stop and not word.is_punct
+
+        def tok2text(word: Token):
+            return word.text.lower()
+
         for tokens in sentences:
+            # start with unigram
+            ngrams: List[str] = [tok2text(t) for t in tokens if is_word(t)]
+            if bigram:  # add bigrams
+                for i, t in enumerate(tokens):
+                    if i == 0:
+                        continue
+
+                    prev = tokens[i - 1]
+                    if is_word(prev) and is_word(t):
+                        ngrams.append(f'{tok2text(prev)} {tok2text(t)}')
+
             pairs = set()
-            for src in tokens:
-                src = src.lower()
-                res.word_freq.setdefault(src, 0)
-                res.word_freq[src] += 1
+            for i, src in enumerate(ngrams):
+                add_vocab(src)
 
-                res.vocab.add(src)
+                if i + 1 >= len(ngrams):
+                    break
 
-                for tgt in tokens:
-                    tgt = tgt.lower()
-                    if src == tgt:
-                        continue
-
-                    # multiple co-occurrence in the same sentence is counted as one
-                    p = tuple(sorted([src, tgt]))  # type: Tuple[str, str]
-                    if p in pairs:
-                        continue
-                    pairs.add(p)
-
-                    res.co_freq.setdefault(p, 0)
-                    res.co_freq[p] += 1
+                for tgt in ngrams[i + 1:]:
+                    add_pair(src, tgt)
 
         return res

@@ -8,18 +8,18 @@ class PMI:
         self.doc_stats = doc_stats
 
     def __call__(self, src_words: Iterable[str], target_words: Optional[Iterable[str]] = None, threshold=10,
-                 include_scores=False, top_k=20):
+                 include_scores=False, top_k=20, include_target_bigrams=False):
         res = {}
         for src in src_words:
-            src = src.lower()
-
             if src not in self.doc_stats.word_freq:
                 continue
             res[src] = {}
 
             targets = target_words if target_words is not None else list(self.doc_stats.vocab)
             for tgt in targets:
-                tgt = tgt.lower()
+                # ignore bigrams in target
+                if not include_target_bigrams and len(tgt.split()) > 1:
+                    continue
 
                 if src == tgt:
                     continue

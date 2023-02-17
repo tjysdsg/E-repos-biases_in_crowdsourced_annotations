@@ -1,0 +1,567 @@
+{
+  "woman": [
+    "black purse",
+    "chevrolet car",
+    "flower dress",
+    "white gown",
+    "weaves"
+  ],
+  "women": [
+    "wearing skirts",
+    "burkas",
+    "husbands",
+    "black dresses",
+    "saris"
+  ],
+  "man": [
+    "clown nose",
+    "glasses looks",
+    "beared",
+    "gray beard",
+    "hawaiian shirt"
+  ],
+  "men": [
+    "turbans",
+    "rickshaws",
+    "wives",
+    "yellow vests",
+    "holding guitars"
+  ],
+  "girl": [
+    "pigtails",
+    "baby sister",
+    "pink swimsuit",
+    "little blond",
+    "pink helmet"
+  ],
+  "girls": [
+    "play jump",
+    "slumber party",
+    "ballet class",
+    "slumber",
+    "playing house"
+  ],
+  "boy": [
+    "toy truck",
+    "action figures",
+    "pirate costume",
+    "pumpkin patch",
+    "hacky sack"
+  ],
+  "boys": [
+    "fruit cart",
+    "black swim",
+    "comic books",
+    "marbles",
+    "sergeant"
+  ],
+  "female": [
+    "male dog",
+    "contortionist",
+    "football fan",
+    "consisting",
+    "bicyclist rides"
+  ],
+  "male": [
+    "female dog",
+    "tap dancer",
+    "model poses",
+    "gray tank",
+    "female singer"
+  ],
+  "mother": [
+    "daughter play",
+    "bonding",
+    "aunt",
+    "son watch",
+    "daughter walk"
+  ],
+  "father": [
+    "son playing",
+    "son play",
+    "son walk",
+    "son",
+    "young daughter"
+  ],
+  "sister": [
+    "brother",
+    "girl hugs",
+    "piggyback ride",
+    "blow bubbles",
+    "piggyback"
+  ],
+  "brother": [
+    "sister play",
+    "sister",
+    "girl helps",
+    "little sister",
+    "girl hugs"
+  ],
+  "daughter": [
+    "mother helps",
+    "father teaches",
+    "mother takes",
+    "father holds",
+    "father plays"
+  ],
+  "son": [
+    "father teaches",
+    "father plays",
+    "father holds",
+    "father watches",
+    "father"
+  ],
+  "feminine": [],
+  "masculine": [],
+  "black": [
+    "smock",
+    "jacket walking",
+    "belts",
+    "saucer",
+    "labs"
+  ],
+  "asian": [
+    "southeast",
+    "descent",
+    "symbols",
+    "jacket smiles",
+    "long-sleeved"
+  ],
+  "hispanic": [
+    "organize",
+    "yellow safety",
+    "backward",
+    "male workers",
+    "wok"
+  ],
+  "white": [
+    "water rafting",
+    "player dressed",
+    "striped dress",
+    "khaki pants",
+    "rodent"
+  ],
+  "african": [
+    "american male",
+    "american man",
+    "american woman",
+    "american child",
+    "headstand"
+  ],
+  "american": [
+    "idol",
+    "native",
+    "african",
+    "latin",
+    "young african"
+  ],
+  "latino": [
+    "sowing",
+    "wall covered",
+    "prepping",
+    "happily wearing",
+    "communicate"
+  ],
+  "latina": [],
+  "caucasian": [
+    "slender",
+    "american child",
+    "fleece",
+    "people await",
+    "people including"
+  ],
+  "africans": [
+    "shooting guns",
+    "taking shelter",
+    "armed",
+    "source",
+    "getting water"
+  ],
+  "middle-eastern": [],
+  "australian": [
+    "outback",
+    "dog competes",
+    "agility",
+    "black clothing",
+    "shepherd"
+  ],
+  "australians": [],
+  "asians": [
+    "cafe eating",
+    "native dress",
+    "tradition",
+    "plane flying",
+    "explain"
+  ],
+  "european": [
+    "cars parked",
+    "brick street",
+    "aged woman",
+    "white umbrella",
+    "countries"
+  ],
+  "europeans": [],
+  "chinese": [
+    "new year",
+    "lanterns",
+    "rubber gloves",
+    "squash",
+    "characters"
+  ],
+  "indian": [
+    "southeast asian",
+    "southeast",
+    "wearing traditional",
+    "works hard",
+    "asian descent"
+  ],
+  "indonesian": [],
+  "brazilian": [
+    "mime",
+    "author",
+    "entertainer",
+    "man singing",
+    "100"
+  ],
+  "pakistani": [],
+  "russian": [
+    "prime",
+    "goatee",
+    "apartment complex",
+    "based",
+    "tundra"
+  ],
+  "nigerian": [],
+  "japanese": [
+    "kimonos",
+    "anime",
+    "play tug-of-war",
+    "positions",
+    "loved ones"
+  ],
+  "mexican": [
+    "man digging",
+    "mariachi band",
+    "guys standing",
+    "sits atop",
+    "convicts"
+  ],
+  "filipino": [],
+  "vietnamese": [],
+  "german": [
+    "shepherd",
+    "shepard",
+    "shepherds",
+    "solider",
+    "solders"
+  ],
+  "egyptian": [],
+  "ethiopian": [],
+  "turkish": [],
+  "thai": [
+    "telephone wires",
+    "chi",
+    "buddhist",
+    "thailand",
+    "general"
+  ],
+  "french": [
+    "fries",
+    "fry",
+    "horn",
+    "refreshing",
+    "college class"
+  ],
+  "british": [
+    "children holding",
+    "clothes stand",
+    "new movie",
+    "military man",
+    "road outside"
+  ],
+  "italian": [
+    "sketches",
+    "pepperoni",
+    "chef makes",
+    "bistro",
+    "large meal"
+  ],
+  "korean": [
+    "symbols",
+    "vets",
+    "korea",
+    "walrus",
+    "pink flowers"
+  ],
+  "canadian": [
+    "mexican flag",
+    "moose",
+    "attendance",
+    "goose",
+    "border"
+  ],
+  "spanish": [
+    "ruin",
+    "red bandanna",
+    "overgrown",
+    "sari",
+    "couple watches"
+  ],
+  "dutch": [],
+  "swiss": [
+    "alps",
+    "gather outside",
+    "avalanche",
+    "wields",
+    "rescue"
+  ],
+  "saudi": [],
+  "argentinian": [],
+  "swedish": [
+    "crosscountry",
+    "children pose",
+    "dark shirt",
+    "gold medal",
+    "massage"
+  ],
+  "belgian": [],
+  "polish": [
+    "nail",
+    "toenails",
+    "woman loves",
+    "rag",
+    "collect"
+  ],
+  "israeli": [
+    "men celebrate",
+    "looking man",
+    "middle eastern",
+    "eastern",
+    "problems"
+  ],
+  "irish": [
+    "jig",
+    "folk song",
+    "long-haired man",
+    "cottage",
+    "female artist"
+  ],
+  "greek": [
+    "organization",
+    "lettering",
+    "ancient",
+    "olive",
+    "chiseling"
+  ],
+  "ukrainian": [],
+  "jamaican": [],
+  "mongolian": [
+    "dirt field",
+    "bbq",
+    "arrow",
+    "beneath",
+    "shines"
+  ],
+  "armenian": [],
+  "disability": [],
+  "disabled": [
+    "convicts",
+    "chair holding",
+    "special olympics",
+    "bottled water",
+    "non"
+  ],
+  "handicap": [],
+  "handicapped": [
+    "occuring",
+    "positioned",
+    "treatment",
+    "felt",
+    "install"
+  ],
+  "mentally": [],
+  "mental": [
+    "ward",
+    "escaped",
+    "heavy coat",
+    "sovereign",
+    "memory"
+  ],
+  "autism": [],
+  "lesbian": [
+    "biker jumps",
+    "field outside",
+    "adopted",
+    "pet dog",
+    "attracted"
+  ],
+  "lesbians": [
+    "deeply",
+    "greeting",
+    "rock band",
+    "hug",
+    "love"
+  ],
+  "gay": [
+    "pride parade",
+    "pride",
+    "rights",
+    "marriage",
+    "protest outside"
+  ],
+  "bisexual": [],
+  "pansexual": [],
+  "straight": [
+    "razor",
+    "african-american man",
+    "tambourine",
+    "ahead",
+    "stared"
+  ],
+  "muslim": [
+    "pamphlets",
+    "mosque",
+    "women buying",
+    "family walking",
+    "peddling"
+  ],
+  "christian": [
+    "strips",
+    "stretched",
+    "christmas presents",
+    "left hand",
+    "holidays"
+  ],
+  "jew": [],
+  "jewish": [
+    "men discussing",
+    "glancing",
+    "man fills",
+    "man dresses",
+    "hitler"
+  ],
+  "buddhist": [
+    "telephone wires",
+    "feather",
+    "thai",
+    "temple",
+    "pose outside"
+  ],
+  "hindu": [],
+  "atheist": [],
+  "muslims": [
+    "new restaurant",
+    "terrorists",
+    "christians",
+    "gather near",
+    "riding skateboards"
+  ],
+  "christians": [
+    "muslims",
+    "gospel",
+    "impressed",
+    "gathered outdoors",
+    "pork"
+  ],
+  "jews": [],
+  "buddhists": [],
+  "atheists": [],
+  "old": [
+    "18 years",
+    "fashioned",
+    "10 year",
+    "reminisce",
+    "60"
+  ],
+  "elderly": [
+    "yellow raincoat",
+    "long-sleeved shirt",
+    "woman resting",
+    "antiques",
+    "cutting board"
+  ],
+  "retired": [
+    "good place",
+    "accessory",
+    "5 years",
+    "years ago",
+    "clutching"
+  ],
+  "teenage": [
+    "black swim",
+    "gray tank",
+    "baseball diamond",
+    "turtles",
+    "falling asleep"
+  ],
+  "young": [
+    "karate uniform",
+    "girl draws",
+    "boy feeds",
+    "boy dances",
+    "sparing"
+  ],
+  "senior": [
+    "citizen",
+    "citizens",
+    "sat outside",
+    "playing bingo",
+    "beautiful scenery"
+  ],
+  "seniors": [
+    "theft",
+    "man delivers",
+    "nearest",
+    "person watches",
+    "delivers"
+  ],
+  "teenager": [
+    "camouflaged",
+    "surfed",
+    "distract",
+    "extra money",
+    "large pot"
+  ],
+  "teenagers": [
+    "yellow shirts",
+    "red chairs",
+    "plying",
+    "library studying",
+    "insects"
+  ],
+  "old men": [
+    "reminisce",
+    "straw hats",
+    "inappropriate",
+    "raincoats",
+    "grumpy"
+  ],
+  "old women": [
+    "intense game",
+    "vases",
+    "earring",
+    "carring",
+    "doorstep"
+  ],
+  "black people": [
+    "corvette",
+    "wedding ceremony",
+    "rioting",
+    "felt",
+    "robbed"
+  ],
+  "black male": [
+    "green t-shirt",
+    "notebooks",
+    "backyard pool",
+    "building looking",
+    "unfinished building"
+  ],
+  "asian teenagers": [
+    "red chairs",
+    "electronic devices",
+    "carrying flags",
+    "atm",
+    "piercings"
+  ]
+}

@@ -97,12 +97,9 @@
 
     \subsection{Unigram PMI}
 
-    We first perform unigram PMI analysis on the entire corpus, and then on the premise text and the hypothesis text
-    individually.
-
+    We perform unigram PMI analysis on the premise text and the hypothesis text individually.
     For each analysis experiment, we focus on the most associated words with a set of
     identity labels~\cite{identity_labels}.
-
 
     \begin{table*}
         \begin{threeparttable}
@@ -250,6 +247,21 @@
                 latin,
                 drapes
                 \\\hline
+
+                indian &
+                sari,
+                headdresses,
+                saris,
+                ritual,
+                chief
+                &
+                southeast,
+                style,
+                boot,
+                muffins,
+                descent
+                \\\hline
+
             \end{tabular}
 
             \begin{tablenotes}
@@ -261,8 +273,13 @@
         \caption{Top associated unigrams with identity labels}
         \label{tab:unigram_pmi}
     \end{table*}
-    % \begin{tabular}{@{}c@{}}
-    % \end{tabular}
+
+    \subsection{Bigram PMI}
+
+    We extend the list of identity labels by combining existing ones into bigrams.
+    We also extract all bigrams from the text, and add them to the vocabulary for PMI calculation.
+    Note that we skip the calculation if two bigrams share a unigram, since we are not interested in association
+    between ``he'' and ``he doesn't``.
 
 
     \section{Results and Discussion}
@@ -292,6 +309,156 @@
     We also find it interesting that \texttt{south} is among the top 5 most associated words with \texttt{american}
     while \texttt{north} is not found even in the top 20s, as if people think \texttt{american} are from North
     America by default.
+
+    \subsection{Bigram PMI}
+
+    \begin{table*}
+        \small
+        \centering
+        \begin{tabular}{l|c|c}
+            \hline
+            Identity & Premise & Hypothesis \\
+            \hline
+
+            old men &
+            \begin{tabular}{@{}c@{}}
+                park benches,
+                stock,
+                rock concert, \\
+                swim caps,
+                concrete bench
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                reminisce,
+                straw hats,
+                inappropriate, \\
+                raincoats,
+                grumpy
+            \end{tabular}
+            \\\hline
+
+            old women &
+            \begin{tabular}{@{}c@{}}
+                selling vegetables,
+                wearing hat, \\
+                cases,
+                walker,
+                fresh produce
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                intense game,
+                vases,
+                earring, \\
+                carring,
+                doorstep
+            \end{tabular}
+            \\\hline
+
+            black people &
+            \begin{tabular}{@{}c@{}}
+                scarf walks,
+                couches,
+                looking forward, \\
+                boston,
+                dilapidated
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                corvette,
+                wedding ceremony,
+                rioting, \\
+                felt,
+                robbed
+            \end{tabular}
+            \\\hline
+
+            black male &
+            \begin{tabular}{@{}c@{}}
+                puma,
+                free throw,
+                grinder, \\
+                shirt hanging,
+                waffle
+            \end{tabular}
+            &
+            \begin{tabular}{@{}c@{}}
+                green t-shirt,
+                notebooks,
+                backyard pool, \\
+                building looking,
+                unfinished building
+            \end{tabular}
+            \\\hline
+
+            asian teenagers &
+            NA
+            &
+            \begin{tabular}{@{}c@{}}
+                red chairs,
+                electronic devices,
+                carrying flags, \\
+                atm,
+                piercings
+            \end{tabular}
+            \\\hline
+
+        \end{tabular}
+
+        \caption{Top associated unigrams or bigrams with bigram identity labels}
+        \label{tab:bigram2unigram_pmi}
+    \end{table*}
+
+    Table~\ref{tab:bigram2unigram_pmi} lists top associated unigrams with bigram identity labels.
+    This result corresponds to our previous finding that hypothesis text contains more biases and stereotypes.
+    For exapmle, \texttt{old men} and \texttt{grumpy}, \texttt{black people} and \texttt{rioting}, and
+    \texttt{asian teenagers} and \texttt{electronic devices}.
+
+    \begin{table*}
+        \small
+        \centering
+        \begin{tabular}{l|c|c}
+            \hline
+            Identity & Premise & Hypothesis \\
+            \hline
+
+            indian &
+            sari,
+            headdresses,
+            saris,
+            ritual,
+            chief
+            &
+            southeast asian,
+            southeast,
+            wearing traditional,
+            works hard,
+            asian descent
+            \\\hline
+
+            africans &
+            green vegetables,
+            tribe,
+            hearts,
+            tap,
+            huts
+            &
+            shooting guns,
+            taking shelter,
+            armed,
+            source,
+            getting water
+            \\\hline
+
+        \end{tabular}
+        \caption{Top associated unigrams or bigrams with unigram identity labels}
+        \label{tab:bigram2bigram_pmi}
+    \end{table*}
+
+    Table~\ref{tab:bigram2bigram_pmi} shows top associated unigrams or bigrams with unigram identity labels.
+    We can spot new stereotypical phrases not seen in previous experiments.
+    For example, \texttt{indian} and \texttt{works hard}, and \texttt{africans} and \texttt{shooting guns}.
 
     \subsection{Qualitative Analysis}
 
