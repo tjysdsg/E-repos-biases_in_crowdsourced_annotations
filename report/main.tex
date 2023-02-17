@@ -22,6 +22,10 @@
 \usepackage{amsmath}
 \usepackage{threeparttable}
 
+% Set the left margin to zero for the quote environment
+\AtBeginEnvironment{quote}{\setlength{\leftmargini}{4pt}}
+
+
 \title{11830 Report: Biases in Crowdsourced Annotations}
 
 \author{
@@ -290,6 +294,40 @@
     America by default.
 
     \subsection{Qualitative Analysis}
+
+    In this section, we will present some examples that contains biases or stereotypes.
+
+    In the example below, the annotator somehow chooses Africans shooting guns as a
+    contradictory event of the premise.
+    In addition, they use ``shooting guns'' instead of ``hunting''.
+    \begin{quote}
+        Premise: Africans in tribe clothes, walking pass a green. \\
+        Hypothesis: Africans are shooting guns at a bear. \\
+        Label: contradiction
+    \end{quote}
+
+    In this example, the hypothesis implies that Africans are slaves.
+    Moreover, the premise itself also contains stereotypes of Africans working labor jobs in harsh conditions.
+    \begin{quote}
+        Premise: Africans working in a mine digging. \\
+        Hypothesis: Africans are being forced to mine for diamonds. \\
+        Label: neutral
+    \end{quote}
+
+    In the next example, we believe that annotator is misled by the premise although the label is \texttt{neutral}.
+    Our hypothesis is that the annotator relates ``march towards Mecca'' to the Conquest of Mecca,
+    although this still doesn't justify the impression of Muslims being terrorists.
+    \begin{quote}
+        Premise: Several Muslim worshipers march towards Mecca. \\
+        Hypothesis: The Muslims are terrorists. \\
+        Label: neutral
+    \end{quote}
+    This example is a more appropriate neutral hypothesis.
+    \begin{quote}
+        Premise: Muslim women talking in a marketplace. \\
+        Hypothesis: The Muslims are talking on their phones. \\
+        Label: neutral
+    \end{quote}
 
     \subsection{Crowdsourcing Setup}
 
