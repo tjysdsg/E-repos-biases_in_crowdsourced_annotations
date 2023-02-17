@@ -16,5 +16,6 @@ SNLI_DATA_FILES = {
 
 PREMISE_KEY = 'sentence1'
 HYPOTHESIS_KEY = 'sentence2'
+LABEL_KEY = 'gold_label'
 PREMISE_ID_KEY = 'captionID'
 HYPOTHESIS_ID_KEY = 'pairID'
